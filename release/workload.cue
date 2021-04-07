@@ -39,9 +39,8 @@ _workload: {
 				core_v1.#Container & {
 					name: #name
 
-					#ports: [string]:       int
-					#envVars: [string]:     string
-					#envVarFroms: [string]: core_v1.#EnvVarSource
+					#ports: [string]:   int
+					#envVars: [string]: string | core_v1.#EnvVarSource
 
 					ports: [
 						for n, cp in #ports {
@@ -54,15 +53,20 @@ _workload: {
 
 					env: [
 						for n, v in #envVars {
-							{
-								name:  n
-								value: v
+							let isString = (v & string) != _|_
+
+							if isString {
+								{
+									name:  n
+									value: v
+								}
 							}
-						},
-						for n, v in #envVarFroms {
-							{
-								name:      n
-								valueFrom: v
+
+							if !isString {
+								{
+									name:      n
+									valueFrom: v
+								}
 							}
 						},
 					]

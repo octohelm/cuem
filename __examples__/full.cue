@@ -34,6 +34,7 @@ release.#Release & {
 
 				#envVars: {
 					SOME_ENV: "xxx"
+					SOME_ENV_FROM: {secretKeyRef: {key: "xxx", name: "\(#name)-token"}}
 				}
 
 				#ports: {
