@@ -68,7 +68,7 @@ _rbac: {
 						]
 
 						roleRef: {
-							kind:     "ClusterRole"
+							kind:     "Role"
 							name:     "\(n)"
 							apiGroup: "rbac.authorization.k8s.io"
 						}
