@@ -7,7 +7,7 @@ package release
 
 	#context: *"default" | string // context name
 
-	apiVersion: "octohelm.tech/v1alpha"
+	apiVersion: "octohelm.tech/v1alpha1"
 	kind:       "Release"
 
 	metadata: name:      "\(#name)"
