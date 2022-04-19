@@ -1,26 +1,27 @@
 package release
 
 #Release: {
-	#name: string // release name
+	// release name
+	#name: string
 
-	#namespace: string // releaee namespace
+	// releaee namespace
+	#namespace: string
 
-	#context: *"default" | string // context name
+	// context name
+	#context: string
 
 	apiVersion: "octohelm.tech/v1alpha1"
 	kind:       "Release"
 
 	metadata: name:      "\(#name)"
 	metadata: namespace: "\(#namespace)"
+	metadata: labels: [K=string]: string
 
-	metadata: labels: context: "\(#context)"
+	metadata: labels: "context": "\(#context)"
 
-	_namespace & {#namespace: metadata.namespace}
-	_rbac & {#namespace: metadata.namespace}
-	_configuration & {#namespace: metadata.namespace}
-	_storage & {#namespace: metadata.namespace}
-	_network & {#namespace: metadata.namespace}
-	_workload & {#namespace: metadata.namespace}
+	for m in [_namespace, _rbac, _configuration, _storage, _network, _workload] {
+		m & {#namespace: #namespace}
+	}
 
 	// wild kube resources
 	spec: kube?: _

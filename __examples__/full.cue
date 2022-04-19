@@ -1,63 +1,9 @@
 package example
 
 import (
-	"github.com/octohelm/cuem/release"
+	"github.com/octohelm/cuem/__examples__/components/web"
 )
 
-release.#Release & {
-	#name:      "test"
-	#namespace: "\(#name)"
-
-	spec: {
-		configMaps: "\(#name)-conf": {
-			data: "nginx.conf": "server {}"
-		}
-
-		secrets: "\(#name)-secret": {
-			data: "xxx": 'server {}'
-		}
-
-		deployments: "\(#name)": {
-
-			#volumes: "conf": {
-				mountPath: "/etc/nginx/"
-				volume: configMap: name: "\(#name)-conf"
-			}
-
-			#volumes: "token": {
-				mountPath: "/var/token/"
-				volume: secret: secretName: "\(#name)-token"
-			}
-
-			#containers: "containers": {
-				image: "nginx:alpine"
-
-				#envVars: {
-					SOME_ENV: "xxx"
-					SOME_ENV_FROM: {secretKeyRef: {key: "xxx", name: "\(#name)-token"}}
-				}
-
-				#ports: {
-					"http": 80
-				}
-			}
-
-			spec: template: spec: serviceAccountName: #name
-		}
-
-		serviceAccounts: "\(#name)": {
-			#role: "ClusterRole"
-			#rules: [
-				{
-					verbs: ["*"]
-					apiGroups: ["*"]
-					resources: ["*"]
-				},
-				{
-					verbs: ["*"]
-					nonResourceURLs: ["*"]
-				},
-			]
-		}
-	}
+web & {
+	#name: "full"
 }

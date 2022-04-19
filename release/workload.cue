@@ -170,7 +170,6 @@ _workload: {
 
 		for x in [deployments, daemonSets, statefulSets]
 		for n, w in x {
-
 			if len(w.spec.template.spec.containers) > 0 && len(w.spec.template.spec.containers[0].ports) > 0 {
 				services: "\(n)": core_v1.#Service & {
 					spec: selector: {
